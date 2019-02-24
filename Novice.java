@@ -1,139 +1,117 @@
 package com.company;
+
+import java.util.Random;
 import java.util.Scanner;
 
 public class Novice {
-    private String name;
-    private int hp;
-    private double exp;
-    private int money;
-    private int lv;
-    private int maxHp;
+    protected int hp;
+    protected double attackDamage;
+    protected double magicDamage;
+        private int maxHp,lv,sp;
+        private double exp;
+        private String Class;
+
+
     public Novice(){
-        hp = 500;
-        maxHp = 100*1*5;
-        exp = 1;
-        money = 500;
-        lv = 1;
-    }
-    public int getLv(){ return  lv; }
-    public double getExp(){ return exp; }
-    public int getHp(){ return hp; }
-    public int getMoney(){ return money; }
-    public int getMaxHp(){return maxHp;}
-    public void status(){
-        //status
-        System.out.println("-----Your status-----");
-        System.out.println("Lv    : "+ getLv());
-        System.out.println("hp    : "+ getHp());
-        System.out.println("exp   : "+ getExp());
-        System.out.println("money : "+ getMoney() + "   Zeny.");
-    }
-    public void Shop(){
-        System.out.println("Coming Soon!");
-    }
-    public void KeepLevel(){
-        int event;
-        Scanner in = new Scanner(System.in);
-        System.out.println("Do you wont to figt with something (1 = yes , 0 = no)");
-        event = in.nextInt();
-        if(event == 1 ){
-            int event1;
-            System.out.println("What monster do you want to fight");
-            System.out.println("1. Poring (Lv.1)");
-            System.out.println("2. Lunatic (Lv.2)");
-            System.out.println("3. Fabre (Lv.3)");
-            System.out.println("4. Pupa (Lv.4)");
-            System.out.println("5. Savage Babe (Lv.5)");
-            Scanner in1 = new Scanner(System.in);
-            System.out.print("Enter no. of monster : ");
-            event1 = in1.nextInt();
+            Class  = "Novice";
+            hp = 100;
+            sp = 100;
+            lv = 1;
+            maxHp = lv*100;
+            exp = 0;
+        attackDamage = 10;
+        magicDamage = 10;
+        }
+        public void status(String name){
+            System.out.println("Name :"+name);
+            System.out.println("Class :" + Class);
+            System.out.println("Level :"+getLv());
+            System.out.println("Exp :"+getExp());
+            System.out.println("Hp :" + getHp() + "/" + getMaxHp());
+            System.out.println("SP :"+ getSp());
+            System.out.println("Attack Damage " + getAttackDamage() + "Magic Damage"+ getMagicDamage());
+        }
+        public double getAttackDamage(){return attackDamage;}
+        public double getMagicDamage(){return magicDamage;}
+        public int getLv(){return lv;}
+        public double getExp(){return exp;}
+        public int getHp(){return hp;}
+        public int getSp(){return sp;}
+        public int getMaxHp(){return maxHp;}
+        public void setExp(int earn){
+            exp = exp + earn;
+        }
+        public void regenHp(int maxHp){
+            hp = maxHp;
+            sp = maxHp;
+            System.out.println("Your HP and SP Will be Regen");
+        }
+        public void setDamage(int damage){
+            hp = hp-damage;
+            if(hp <= 0 ){
+                System.out.println("YOU DIE !");
+                System.out.println("Please rest");
+            }
+        }
+        public void setSp(int decrease){
+            sp = sp - decrease;
+        }
+        public void hitMonster(Bag bag){
+            if(lv == 1 && exp == 0){
+                bag.addItem();
+                System.out.println("Congratulations you get  5 of Red Potion and  5 of Blue Potion");
+            }
+            setExp(150);
+            setDamage(50);
+            setSp(10);
+            setLv(exp);
 
-
-            if(event1 == 1){ // Poring
-                System.out.println("Congratulation !! you kill Poring ");
-                System.out.println("Earn 32 Zeny");
-                setMoney(32);
-                System.out.println("Earn 7 exp");
-                setExp(7);
-                System.out.println("You can check you status in event board");
-                setDamage(1);
+            Random rand = new Random();
+            int value = rand.nextInt(5);  // Can get Red Potion if random is 0 and Blue Potion is 1 another don't get anything
+            if (value == 0){
+                bag.Red();
+                System.out.println("You get Red Potion 1");
             }
-            else if(event1 == 2){ // Lunatic
-                System.out.println("Congratulation !! you kill Poring ");
-                System.out.println("Earn 32 Zeny");
-                setMoney(32);
-                System.out.println("Earn 18 exp");
-                setExp(18);
-                System.out.println("You can check you status in event board");
-                setDamage(2);
-            }
-            else if(event1 == 3){ // Fabre
-                System.out.println("Congratulation !! you kill Poring ");
-                System.out.println("Earn 33 Zeny");
-                setMoney(33);
-                System.out.println("Earn 19 exp");
-                setExp(19);
-                System.out.println("You can check you status in event board");
-                setDamage(3);
-            }
-            else if(event1 == 4){ // Pupa
-                System.out.println("Congratulation !! you kill Poring ");
-                System.out.println("Earn 33 Zeny");
-                setMoney(33);
-                System.out.println("Earn 1 exp");
-                setExp(1);
-                System.out.println("You can check you status in event board");
-                setDamage(32);
-            }
-            else if(event1 == 5){ // Savage Babe
-                System.out.println("Congratulation !! you kill Poring ");
-                System.out.println("Earn 50 Zeny");
-                setMoney(50);
-                System.out.println("Earn 50 exp");
-                setExp(50);
-                System.out.println("You can check you status in event board");
-                setDamage(50);
+            else if(value == 1){
+                bag.Blue();
+                System.out.println("You get Blue Potion 1");
             }
         }
-        else{
-            // not figth
+        public void changeClass(){
+            int event;
+            Scanner in = new Scanner(System.in);
+            System.out.print("Enter Class do you want (1 . Magician , 2 . Swordman ) :" );
+            event = in.nextInt();
+            if(event == 1){
+                Magician magician = new Magician();
+                magician.print();
+                Class = "Magician";
+                magician.skill(attackDamage,magicDamage);
+            }
+            else if(event == 2){
+                Swordman swordman = new Swordman();
+                swordman.print();
+                Class = "Swordman";
+                swordman.skill(attackDamage,magicDamage);
+            }
         }
-    }
-    public void setLv(double exp){
-        double upExp;
-        upExp = lv*0.5*100;
-        if( exp >= upExp){
-            this.exp = exp - upExp;
-            lv = lv + 1;
-            System.out.println("Congratulation !! Level you upping !!");
+        public void changeHpAndSp(){
+            this.hp = 100 *lv;
+            this.maxHp = hp;
+            this.sp = hp;
         }
-    }
-    public void setHp(int maxHp){
-        hp = maxHp;
-    }
-    public void setExp(int earn){
-        exp = exp + earn;
-    }
-    public void setMoney(int earn){
-        money = money + earn;
-    }
-    public void setDamage(int damage){
-        hp = hp - damage;
-        if (hp <= 0){
-            System.out.println("You die!!");
+        public void setLv(double exp){
+            int levelUp;
+            levelUp = lv*100;
+            if(exp >= levelUp){
+                this.exp = exp - levelUp;
+                lv = lv + 1;
+                System.out.println("Congratulations !! You level up");
+                changeHpAndSp();
+                if(lv == 5 ){
+                    System.out.println("Congratulations you can select new Class");
+                    changeClass();
+                }
+            }
         }
-    }
-    public void incressHP(int plus){
-        if(hp + plus < maxHp){
-            this.hp += plus;
-        }
-        else if(hp + plus >= maxHp){
-            this.hp += (maxHp - hp);
-        }
-    }
-    Bag bag = new Bag();
-    public void usePosion(int hp) {
-            this.hp = bag.usePosion(0);
-            incressHP(hp);
-    }
 }

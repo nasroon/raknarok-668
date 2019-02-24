@@ -1,18 +1,38 @@
 package com.company;
-import java.util.*;
-import java.io.*;
-public class Bag {
-    private int countPosion = 20;
-    private Item item = new Item();
 
-    public int usePosion(int index){
-        if(countPosion != 0 && item.getPotion(index).equals("Posion")){
-            countPosion--;
-            return 20;
-        }
-        return 0;
+import java.util.*;
+
+public class Bag {
+
+    private ArrayList<Item> items;
+
+
+    public Bag() {
+        items = new ArrayList<Item>();
     }
-    public int showCountPosion(){
-        return countPosion;
+
+    public void addItem(){
+        items.add(new Item(0,"RedPotion",5));
+        items.add(new Item(1,"BluePotion",5));
+    }
+    public void Red(){
+        Item r1 = new RedPotion(0,"RedPotion",1);
+        items.add(r1);
+    }
+
+    public void Blue(){
+        Item b1 = new BluePotion(1,"BluePotion",1);
+        items.add(b1);
+    }
+
+    public void showItem(){
+        int i =0;
+        for (Item number : items) {
+            System.out.println(items.get(i).getName()+ "   amount  " + items.get(i).getAmount());
+            i++;
+        }
+    }
+    public boolean empty(){
+        return items.isEmpty();
     }
 }
